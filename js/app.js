@@ -10,6 +10,7 @@ const egresos = [
 
 let cargarApp = () =>{
     cargarCabecero();
+    
 }
 
 let totalIngresos = () => {
