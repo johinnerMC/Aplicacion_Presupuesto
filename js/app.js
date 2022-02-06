@@ -29,12 +29,18 @@ let totalEgresos = () => {
 
 let cargarCabecero =  () => {
     let presupuesto = totalIngresos() - totalEgresos();
-    let porcentajeEgreso = totalIngresos() / totalIngresos();
-    document.getElementById('Presupuesto').innerText = presupuesto;
-    document.getElementById('porcentaje').innerText = porcentajeEgreso;
-    document.getElementById('ingresos').innerText = totalIngresos();
-    document.getElementById('egresos').innerText = totalEgresos();
+    let porcentajeEgreso = totalEgresos() / totalIngresos();
+    document.getElementById('Presupuesto').innerText = "$ " + formatoMoneda(presupuesto);
+    document.getElementById('porcentaje').innerText = formatoPorcentaje(porcentajeEgreso);
+    document.getElementById('ingresos').innerText = formatoMoneda(totalIngresos());
+    document.getElementById('egresos').innerText = formatoMoneda(totalEgresos());
 }
 
+const formatoMoneda = (valor) =>{
+   return valor.toLocaleString('ES',{style:'currency', currency:'COP',minimumFractionDigits:0}); 
+}
 
+const formatoPorcentaje = (valor) =>{
+return valor.toLocaleString('en-US', {style: 'percent',minimumFractionDigits:2});
+}
     
