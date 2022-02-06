@@ -12,7 +12,7 @@ let cargarApp = () => {
     cargarCabecero();
     cargarIngresos();
     cargarEgresos();
-    
+
 
 }
 
@@ -70,19 +70,19 @@ const crearIngresoHTML = (ingreso) => {
         </div>
     </div>
 </div>`;
-return ingresoHTML;
+    return ingresoHTML;
 }
 
-const eliminarIngreso = (id) =>{
+const eliminarIngreso = (id) => {
     let indeceEliminar = ingresos.findIndex(ingreso => ingreso.id === id);
-    ingresos.splice(indeceEliminar,1);
+    ingresos.splice(indeceEliminar, 1);
     cargarCabecero();
     cargarIngresos();
-} 
+}
 
 const cargarEgresos = () => {
     let egresosHTML = '';
-    for (let egreso of egresos){
+    for (let egreso of egresos) {
         egresosHTML += crearEgresosHTML(egreso);
     }
     document.getElementById('lista-egresos').innerHTML = egresosHTML;
@@ -94,7 +94,7 @@ const crearEgresosHTML = (egreso) => {
     <div class="elemento_descripcion">${egreso.descripcion}</div>
     <div class="derecha limpiarEstilos">
         <div class="elemento_valor">- ${formatoMoneda(egreso.valor)}</div>
-        <div class="elemento_porcentaje">${formatoPorcentaje(egreso.valor/totalEgresos())}</div>
+        <div class="elemento_porcentaje">${formatoPorcentaje(egreso.valor / totalEgresos())}</div>
         <div class="elemento_eliminar">
             <button class="elemento_eliminar--btn">
                 <ion-icon name = 'close-circle-outline'
@@ -108,7 +108,30 @@ const crearEgresosHTML = (egreso) => {
 
 const eliminarEgreso = (id) => {
     let indeceEliminar = egresos.findIndex(egreso => egreso.id === id);
-    egresos.splice(indeceEliminar,1);
+    egresos.splice(indeceEliminar, 1);
     cargarCabecero();
     cargarEgresos();
+}
+
+const agregarDato = () => {
+    let forma = document.forms['forma'];
+    let tipo = forma['tipo'];
+    let descricion = forma['descripcion'];
+    let valor = forma['valor'];
+    if (descricion.value !== "" && valor.value !== "") {
+        if (tipo.value === "ingreso") {
+            ingresos.unshift(new Ingreso(descricion.value, +valor.value));
+            cargarCabecero();
+            cargarIngresos();
+            descricion.value = "";
+            valor.value = "";
+        }
+        if (tipo.value === "egreso") {
+            egresos.unshift(new Egreso(descricion.value, +valor.value));
+            cargarCabecero();
+            cargarEgresos();
+            descricion.value = "";
+            valor.value = "";
+        }
+    }
 }
